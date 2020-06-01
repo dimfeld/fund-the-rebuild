@@ -9,6 +9,7 @@ import postcss from 'rollup-plugin-postcss';
 import babel from 'rollup-plugin-babel';
 import html, { makeHtmlAttributes } from '@rollup/plugin-html';
 import copy from 'rollup-plugin-copy';
+import json from '@rollup/plugin-json';
 
 const production = process.env.NODE_ENV !== 'development';
 
@@ -65,6 +66,7 @@ export default {
       targets: [{ src: 'static/**/*', dest: 'public/' }],
     }),
     commonjs(),
+    json(),
     babel(babelConfig),
 
     // Watch the `public` directory and refresh the

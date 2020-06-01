@@ -1,15 +1,12 @@
 <script>
-  import GoFundMeEmbed from './GoFundMeEmbed.svelte';
+  import Campaign from './Campaign.svelte';
+  import data from '../data/campaigns.json';
 
-  const campaigns = [
-    'rebuilding-bole-ethiopian-cuisine',
-    'twin-cities-recovery-project-south-mpls-support',
-    'georgefloyd',
-  ];
+  let showCampaigns = data.all.byRaised.map((index) => data.campaigns[index]);
 </script>
 
 <div class="flex flex-col space-y-8">
-  {#each campaigns as campaign}
-    <GoFundMeEmbed {campaign} />
+  {#each showCampaigns as campaign}
+    <Campaign {campaign} />
   {/each}
 </div>

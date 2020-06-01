@@ -12,6 +12,6 @@
   "paths": {
     "^/*": ["src/*"]
   },
-  "include": ["src", "api"],
+  "include": ["src", "api", "scripts"],
   "compileOnSave": false
 }
