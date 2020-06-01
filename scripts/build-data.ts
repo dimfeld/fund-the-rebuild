@@ -4,6 +4,7 @@ import got from 'got';
 import * as fs from 'fs';
 import { orderBy } from 'lodash';
 import promiseLimit from 'promise-limit';
+import striptags from 'striptags';
 
 const campaigns = [
   { name: 'rebuilding-bole-ethiopian-cuisine', state: 'MN' },
@@ -13,6 +14,9 @@ const campaigns = [
   },
   { name: 'georgefloyd', state: 'MN' },
   { name: 'restore-japanla', state: 'CA' },
+  { name: 'lynn-nguyen-and-brent-collier-riot-relief', state: 'OR' },
+  { name: 'help-buranko-cafe', state: 'OR' },
+  { name: 'help-poc-owned-business-recover-from-riot', state: 'OR' },
 ];
 
 function generateIndex(data, key, sortOrder = 'asc') {
@@ -90,7 +94,7 @@ async function run() {
           goal: json.goal_amount,
           name: json.fund_name,
           id: name,
-          longDesc: json.fund_description,
+          longDesc: striptags(json.fund_description, []),
           desc,
           region: state || json.location.city,
           shared_count: json.social_share_total,
@@ -105,7 +109,7 @@ async function run() {
 
   campaignData = campaignData
     .map((c, i) => ({ ...c, index: i }))
-    .filter((c) => !c.deactivated);
+    .filter((c) => !c.deactivated && c.launched && c.donations_enabled);
 
   let indices = {
     byHearts: generateIndex(campaignData, 'hearts'),
