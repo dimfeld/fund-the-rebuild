@@ -53,14 +53,19 @@
       <div class="flex justify-between h-16">
         <div class="flex">
           <div class="flex-shrink-0 flex items-center">
-            <img
+            <span
+              class="text-lg text-teal-800 font-medium"
+              style="font-variant: small-caps">
+              Fund The Rebuild
+            </span>
+            <!-- <img
               class="block lg:hidden h-8 w-auto"
               src="/img/logos/workflow-mark-on-white.svg"
               alt="FundTheRebuild logo" />
             <img
               class="hidden lg:block h-8 w-auto"
               src="/img/logos/workflow-logo-on-white.svg"
-              alt="FundTheRebuild logo" />
+              alt="FundTheRebuild logo" /> -->
           </div>
           <div id="desktop-nav" class="hidden sm:-my-px sm:ml-6 sm:flex">
             <a
