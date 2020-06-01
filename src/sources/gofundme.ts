@@ -31,9 +31,7 @@ export function parseResponse(data) {
     runScripts: 'dangerously',
   });
 
-  let campaign = dom.window.initialState.feed.campaign;
-  let { fund_description, ...rest } = campaign;
-  return rest;
+  return dom.window.initialState.feed.campaign;
 }
 
 export async function getCampaign(value: string) {
