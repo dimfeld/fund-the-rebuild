@@ -19,7 +19,11 @@ const campaigns = [
   { name: 'help-poc-owned-business-recover-from-riot', state: 'OR' },
 ];
 
-function generateIndex(data, key, sortOrder = 'asc') {
+function generateIndex(
+  data,
+  key: string | ((c: Campaign) => number),
+  sortOrder = 'asc'
+) {
   return orderBy(data, key, sortOrder).map((c) => c.index);
 }
 
@@ -119,7 +123,8 @@ async function run() {
     byRaised: generateIndex(campaignData, 'current'),
     byDonations: generateIndex(campaignData, 'donations'),
     byGoal: generateIndex(campaignData, 'goal'),
-    byRemaining: generateIndex(campaignData, (c) => c.goal - c.current_amount),
+    byRemaining: generateIndex(campaignData, (c) => c.goal - c.current, 'desc'),
+    byPercent: generateIndex(campaignData, (c) => c.current / c.goal),
     bySharedCount: generateIndex(campaignData, 'shared_count'),
   };
 
@@ -132,8 +137,10 @@ async function run() {
 
   let output = {
     campaigns: campaignData,
-    regions: perRegion,
-    all: indices,
+    regions: {
+      ...perRegion,
+      all: indices,
+    },
   };
 
   fs.writeFileSync('../data/regions.json', JSON.stringify(regions));
