@@ -24,7 +24,7 @@
         class="w-full sm:w-64 self-start"
         src={campaign.image}
         alt="Campaign" />
-      <div class="flex flex-col space-y-4">
+      <div class="h-full flex flex-col space-y-4">
         <div>Launched {launched} in {campaign.region}</div>
         <div>
           {campaign.donations} people donated ${campaign.current} out of ${campaign.goal}
