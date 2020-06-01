@@ -81,7 +81,7 @@
           class="mt-4 overflow-hidden font-serif"
           style="display:-webkit-box;text-overflow:ellipsis;-webkit-box-orient:
           vertical;-webkit-line-clamp:4">
-          {campaign.longDesc}
+          {@html campaign.longDesc}
         </div>
 
         <div
