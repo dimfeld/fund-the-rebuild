@@ -76,7 +76,7 @@ export default {
     production && terser(),
 
     html({
-      title: 'A Svelte Website',
+      title: 'Fund the Rebuild',
       template: ({ attributes, files, publicPath, title }) => {
         let templateFile = fs.readFileSync('src/index.html');
 

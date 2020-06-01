@@ -1,5 +1,5 @@
 {
-  "name": "svelte-storybook-tailwind",
+  "name": "fund-the-rebuild",
   "author": "Daniel Imfeld",
   "license": "MIT",
   "version": "0.0.2",
@@ -7,13 +7,11 @@
     "build": "rollup -c",
     "autobuild": "rollup -c -w",
     "dev": "NODE_ENV=development run-p start:dev autobuild",
-    "start": "sirv build --single",
-    "start:dev": "NODE_ENV=development sirv build --single --dev",
-    "stories": "NODE_ENV=development start-storybook",
-    "build-storybook": "build-storybook -o build",
-    "static-stories": "build-storybook -c .storybook -o .out"
+    "start": "sirv public --single",
+    "start:dev": "NODE_ENV=development sirv public --single --dev -H 0.0.0.0"
   },
   "dependencies": {
+    "jsdom": "^16.2.2",
     "lodash-es": "^4.17.15",
     "sirv-cli": "^0.4.4"
   },
@@ -32,12 +30,6 @@
     "@rollup/plugin-commonjs": "^11.1.0",
     "@rollup/plugin-html": "^0.1.1",
     "@rollup/plugin-node-resolve": "^7.1.3",
-    "@storybook/addon-a11y": "^5.2.1",
-    "@storybook/addon-actions": "^5.2.1",
-    "@storybook/addon-notes": "^5.2.1",
-    "@storybook/addon-storysource": "^5.2.1",
-    "@storybook/addon-viewport": "^5.2.1",
-    "@storybook/svelte": "^5.2.1",
     "@tailwindcss/ui": "^0.1.3",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
