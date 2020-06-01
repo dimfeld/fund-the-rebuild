@@ -44,7 +44,7 @@ interface Campaign {
   goal: number;
   name: string;
   id: string;
-  short_desc: string;
+  desc: string;
   region: string;
   shared_count: number;
   campaign_state: string;
@@ -57,6 +57,13 @@ async function run() {
       return limit(async () => {
         console.log(`Reading campaign ${name}`);
         let json = await gfm.getCampaign(name);
+
+        let desc = json.fund_description_excerpt;
+        let descEllipsis = desc.lastIndexOf('…');
+        if (descEllipsis >= 0) {
+          desc = desc.slice(0, descEllipsis);
+        }
+
         return {
           source: 'gfm',
           image: json.campaign_photo.scaled['3x2-640'],
@@ -69,7 +76,7 @@ async function run() {
           goal: json.goal_amount,
           name: json.fund_name,
           id: name,
-          short_desc: json.fund_description_excerpt,
+          desc,
           region: state || json.location.city,
           shared_count: json.social_share_total,
           campaign_state: json.state,

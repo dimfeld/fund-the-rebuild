@@ -18,7 +18,7 @@
         <div>
           {campaign.donations} people donated ${campaign.current} out of ${campaign.goal}
         </div>
-        <div>{campaign.short_desc}</div>
+        <div>{campaign.desc}...</div>
         <div>{campaign.region}</div>
         <div>{campaign.hearts} hearts, {campaign.shared_count} shares</div>
       </div>
