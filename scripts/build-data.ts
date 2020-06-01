@@ -11,6 +11,7 @@ const campaigns = [
     state: 'MN',
   },
   { name: 'georgefloyd', state: 'MN' },
+  { name: 'restore-japanla', state: 'CA' },
 ];
 
 function generateIndex(data, key, sortOrder = 'asc') {
