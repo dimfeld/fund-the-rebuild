@@ -1,7 +1,6 @@
 import { JSDOM } from 'jsdom';
-import * as fs from 'fs';
 
-function extract(data) {
+export default function(data) {
   const dom = new JSDOM(data, {
     includeNodeLocations: true,
     runScripts: 'dangerously',
@@ -11,5 +10,3 @@ function extract(data) {
   let { fund_description, ...rest } = campaign;
   return rest;
 }
-
-console.log(JSON.stringify(extract(fs.readFileSync('a.html'))));

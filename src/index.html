@@ -9,7 +9,9 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <%= links %>
 
+    <% if(prod) { %>
     <script async defer data-domain="fundtherebuild.com" src="https://plausible.io/js/plausible.js"></script>
+    <% } %>
   </head>
 
   <body>

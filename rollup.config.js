@@ -101,6 +101,7 @@ export default {
           title,
           scripts,
           links,
+          prod: production,
           htmlAttributes: makeHtmlAttributes(attributes.html),
         });
       },
