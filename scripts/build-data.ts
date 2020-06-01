@@ -1,5 +1,6 @@
 #!/usr/bin/env ts-node
 import * as gfm from '../src/sources/gofundme';
+import got from 'got';
 import * as fs from 'fs';
 import { orderBy } from 'lodash';
 import promiseLimit from 'promise-limit';
@@ -45,18 +46,31 @@ interface Campaign {
   name: string;
   id: string;
   desc: string;
+  longDesc: string;
   region: string;
   shared_count: number;
   campaign_state: string;
+  user: string;
+}
+
+const useLocal = Boolean(process.env.LOCAL_GET);
+
+const getCampaign = useLocal ? gfm.getCampaign : getCampaignNet;
+const parallel = useLocal ? 2 : 10;
+
+function getCampaignNet(name: string) {
+  return got(`https://fundtherebuild.com/api/get-campaign`, {
+    searchParams: { campaign: name },
+  }).json();
 }
 
 async function run() {
-  const limit = promiseLimit(2);
+  const limit = promiseLimit(parallel);
   let campaignData: Campaign[] = await Promise.all(
     campaigns.map(({ name, state }) => {
       return limit(async () => {
         console.log(`Reading campaign ${name}`);
-        let json = await gfm.getCampaign(name);
+        let json = await getCampaign(name);
 
         let desc = json.fund_description_excerpt;
         let descEllipsis = desc.lastIndexOf('…');
@@ -76,10 +90,14 @@ async function run() {
           goal: json.goal_amount,
           name: json.fund_name,
           id: name,
+          longDesc: json.fund_description,
           desc,
           region: state || json.location.city,
           shared_count: json.social_share_total,
           campaign_state: json.state,
+          user: [json.user_first_name, json.user_last_name]
+            .filter(Boolean)
+            .join(' '),
         } as Campaign;
       }) as Promise<Campaign>;
     })
