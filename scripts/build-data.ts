@@ -17,6 +17,7 @@ const campaigns = [
   { name: 'lynn-nguyen-and-brent-collier-riot-relief', state: 'OR' },
   { name: 'help-buranko-cafe', state: 'OR' },
   { name: 'help-poc-owned-business-recover-from-riot', state: 'OR' },
+  { name: 'la-mesa-business-disaster-recovery', state: 'CA' },
 ];
 
 function generateIndex(
