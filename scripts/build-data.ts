@@ -6,7 +6,12 @@ import { orderBy } from 'lodash';
 import promiseLimit from 'promise-limit';
 import striptags from 'striptags';
 
-const campaigns = [
+interface CampaignDef {
+  name: string;
+  state: string;
+}
+
+const campaigns: CampaignDef[] = [
   { name: 'rebuilding-bole-ethiopian-cuisine', state: 'MN' },
   {
     name: 'twin-cities-recovery-project-south-mpls-support',
@@ -29,6 +34,11 @@ const campaigns = [
   { name: 'help-sb-small-businesses-rebuild-amp-recover', state: 'CA' },
   { name: 'rebuild-san-bernardino', state: 'CA' },
   { name: 'alanbertos-vandalized-help-to-cover-repair-cost', state: 'CA' },
+  { name: 'for-james-scurlocks-family', state: 'NE' },
+  { name: 'fundraiser-for-small-business-destroyed', state: 'NY' },
+  { name: 'express-food-market-relief', state: 'IL' },
+  { name: 'bay-area-black-owned-business-relief-fund', state: 'CA' },
+  { name: 'help-black-owned-businesses-rebuild', state: 'CA' },
 ];
 
 function generateIndex(
