@@ -18,6 +18,17 @@ const campaigns = [
   { name: 'help-buranko-cafe', state: 'OR' },
   { name: 'help-poc-owned-business-recover-from-riot', state: 'OR' },
   { name: 'la-mesa-business-disaster-recovery', state: 'CA' },
+  { name: 'zahalea-anderson', state: 'CA' },
+  { name: 'protesters-and-bond-funds', state: 'GA' },
+  { name: 'justicefordavidmcatee', state: 'KY' },
+  { name: 'help-minneapolis-small-businesses', state: 'MN' },
+  { name: '20ux59f8yo', state: 'TX' },
+  { name: 'neighbors4stephanie', state: 'MN' },
+  { name: 'inails-amp-spa-long-beach', state: 'CA' },
+  { name: 'philadelphia-black-owned-business-relief', state: 'PA' },
+  { name: 'help-sb-small-businesses-rebuild-amp-recover', state: 'CA' },
+  { name: 'rebuild-san-bernardino', state: 'CA' },
+  { name: 'alanbertos-vandalized-help-to-cover-repair-cost', state: 'CA' },
 ];
 
 function generateIndex(
