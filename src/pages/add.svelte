@@ -50,9 +50,8 @@
     }
 
     let campaignState = campaign.region.trim();
-    let m = /, ([A-Z]{2})$/.exec(state);
+    let m = /, ([A-Z]{2})$/.exec(campaignState);
     if (m) {
-      console.log(m);
       campaignState = m[1];
     }
 
