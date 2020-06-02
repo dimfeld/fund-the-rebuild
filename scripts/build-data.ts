@@ -17,16 +17,15 @@ interface CampaignDef {
   state: string;
 }
 
-console.log(process.env.FAUNADB_KEY);
 const client = new faunadb.Client({ secret: process.env.FAUNADB_KEY });
 
 async function getData() {
-  let values = await client.query<{ data: [string, string][] }>(
-    q.Paginate(q.Match(q.Index('approved'), true))
-  );
+  let values = await client.query<{
+    data: [faunadb.ExprVal, string, string][];
+  }>(q.Paginate(q.Match(q.Index('approved'), true)));
 
-  return values.data.map(([name, state]) => {
-    return { name, state };
+  return values.data.map(([ref, name, state]) => {
+    return { ref, name, state };
   });
 }
 
