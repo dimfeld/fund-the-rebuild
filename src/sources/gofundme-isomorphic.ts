@@ -27,6 +27,8 @@ export function handleData(json: any, name: string, state: string) {
     desc = desc.slice(0, descEllipsis);
   }
 
+  let longDesc = striptags(json.fund_description, []).slice(0, 1000);
+
   return {
     source: 'gfm',
     image: json.campaign_photo.scaled['3x2-640'],
@@ -39,7 +41,7 @@ export function handleData(json: any, name: string, state: string) {
     goal: json.goal_amount,
     name: json.fund_name,
     id: name || json.url,
-    longDesc: striptags(json.fund_description, []),
+    longDesc,
     desc,
     region: state || json.location.city,
     shared_count: json.social_share_total,
