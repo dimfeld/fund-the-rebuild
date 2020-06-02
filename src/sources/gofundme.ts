@@ -8,9 +8,11 @@ function isUrl(u) {
     return u;
   } catch (e) {
     try {
-      let withHttp = `https://${u}`;
-      new URL(withHttp);
-      return withHttp;
+      if (u.includes('.')) {
+        let withHttp = `https://${u}`;
+        new URL(withHttp);
+        return withHttp;
+      }
     } catch (e) {}
     return null;
   }
