@@ -1,4 +1,5 @@
 import { JSDOM } from 'jsdom';
+import { get } from 'lodash';
 import got from 'got';
 
 function isUrl(u) {
@@ -16,7 +17,7 @@ export function parseResponse(data) {
     runScripts: 'dangerously',
   });
 
-  return dom.window.initialState?.feed?.campaign;
+  return get(dom.window, ['initialState', 'feed', 'campaign']);
 }
 
 export async function getCampaign(value: string) {
