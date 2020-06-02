@@ -85,6 +85,7 @@
           <input
             id="campaign-url"
             bind:value={url}
+            on:focus={(e) => e.target.select()}
             class="form-input block w-full rounded-none rounded-l-md transition
             ease-in-out duration-150 sm:text-sm sm:leading-5" />
         </div>
@@ -140,8 +141,8 @@
           {:else if state === STATE_SUBMITTING}
             Submitting...
           {:else if state === STATE_SUBMITTED}
-            I'll try to process your submission and get it on the site within a
-            day. Thank you!
+            Thank you! I'll try to get your submission on to the site within a
+            day.
           {/if}
         </span>
         <Campaign {campaign} />
