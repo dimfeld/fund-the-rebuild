@@ -4,8 +4,7 @@ import got from 'got';
 import * as fs from 'fs';
 import { orderBy } from 'lodash';
 import promiseLimit from 'promise-limit';
-import striptags from 'striptags';
-
+import { Campaign, handleData } from '../src/sources/gofundme-isomorphic';
 interface CampaignDef {
   name: string;
   state: string;
@@ -63,30 +62,10 @@ function filterByRegion(
   return output;
 }
 
-interface Campaign {
-  source: string;
-  image: string;
-  hearts: string;
-  launched: string;
-  current: number;
-  deactivated: boolean;
-  donations: number;
-  donations_enabled: boolean;
-  goal: number;
-  name: string;
-  id: string;
-  desc: string;
-  longDesc: string;
-  region: string;
-  shared_count: number;
-  campaign_state: string;
-  user: string;
-}
-
 const useLocal = Boolean(process.env.LOCAL_GET);
 
 const getCampaign = useLocal ? gfm.getCampaign : getCampaignNet;
-const parallel = useLocal ? 2 : 10;
+const parallel = useLocal ? 2 : 20;
 
 function getCampaignNet(name: string) {
   return got(`https://fundtherebuild.com/api/get-campaign`, {
@@ -101,34 +80,7 @@ async function run() {
       return limit(async () => {
         console.log(`Reading campaign ${name}`);
         let json = await getCampaign(name);
-
-        let desc = json.fund_description_excerpt;
-        let descEllipsis = desc.lastIndexOf('…');
-        if (descEllipsis >= 0) {
-          desc = desc.slice(0, descEllipsis);
-        }
-
-        return {
-          source: 'gfm',
-          image: json.campaign_photo.scaled['3x2-640'],
-          hearts: json.campaign_hearts,
-          launched: json.launch_date,
-          current: json.current_amount,
-          deactivated: json.deactivated,
-          donations: json.donation_count,
-          donations_enabled: json.donations_enabled,
-          goal: json.goal_amount,
-          name: json.fund_name,
-          id: name,
-          longDesc: striptags(json.fund_description, []),
-          desc,
-          region: state || json.location.city,
-          shared_count: json.social_share_total,
-          campaign_state: json.state,
-          user: [json.user_first_name, json.user_last_name]
-            .filter(Boolean)
-            .join(' '),
-        } as Campaign;
+        return handleData(json, state);
       }) as Promise<Campaign>;
     })
   );

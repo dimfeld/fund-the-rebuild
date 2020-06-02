@@ -49,11 +49,18 @@
       return;
     }
 
+    let campaignState = campaign.region.trim();
+    let m = /, ([A-Z]{2})$/.exec(state);
+    if (m) {
+      console.log(m);
+      campaignState = m[1];
+    }
+
     state = STATE_SUBMITTING;
     try {
       await ky
         .post('/api/add-campaign', {
-          searchParams: { name: campaign.id, state: campaign.region },
+          searchParams: { name: campaign.id, state: campaignState },
         })
         .json();
     } catch (e) {

@@ -14,6 +14,7 @@ export default async function (req: NowRequest, res: NowResponse) {
     );
     res.status(200).json({ added: true });
   } catch (e) {
+    console.error(e);
     res.status(500).json({ message: e.stack });
   }
 }
