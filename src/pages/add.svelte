@@ -74,7 +74,7 @@
 
 <div class="mx-8">
   <div class="flex flex-col">
-    <form action="#" on:submit={fetch}>
+    <form action="#" on:submit|preventDefault={fetch}>
       <label
         for="campaign-url"
         class="block text-sm font-medium leading-5 text-gray-700">
