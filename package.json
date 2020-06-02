@@ -11,17 +11,21 @@
     "dev": "NODE_ENV=development run-p start:dev routify-dev",
     "build": "yarn run routify && yarn run rollup",
     "start": "sirv public --single -H 0.0.0.0",
-    "start:dev": "NODE_ENV=development sirv public --port $PORT --single --dev -H 0.0.0.0"
+    "start:dev": "NODE_ENV=development sirv public --port $PORT --single --dev -H 0.0.0.0",
+    "build-data": "scripts/build-data.ts"
   },
   "dependencies": {
     "@now/node": "^1.6.1",
     "date-fns": "^2.14.0",
+    "dotenv": "^8.2.0",
     "faunadb": "^2.14.1",
     "got": "^11.1.4",
     "idb-keyval": "^3.2.0",
     "jsdom": "^16.2.2",
     "ky": "^0.20.0",
     "lodash-es": "^4.17.15",
+    "pkg-dir": "^4.2.0",
+    "pkg-up": "^3.1.0",
     "promise-limit": "^2.7.0",
     "sirv-cli": "^0.4.4",
     "striptags": "^3.1.1"

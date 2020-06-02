@@ -1,44 +1,34 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env -S ts-node -r dotenv/config
+// import dotenv from 'dotenv';
+// dotenv.config({ debug: true });
+
 import * as gfm from '../src/sources/gofundme';
 import got from 'got';
 import * as fs from 'fs';
 import { orderBy } from 'lodash';
 import promiseLimit from 'promise-limit';
 import { Campaign, handleData } from '../src/sources/gofundme-isomorphic';
+import * as faunadb from 'faunadb';
+import pkgDir from 'pkg-dir';
+const { query: q } = faunadb;
+
 interface CampaignDef {
   name: string;
   state: string;
 }
 
-const campaigns: CampaignDef[] = [
-  { name: 'rebuilding-bole-ethiopian-cuisine', state: 'MN' },
-  {
-    name: 'twin-cities-recovery-project-south-mpls-support',
-    state: 'MN',
-  },
-  { name: 'georgefloyd', state: 'MN' },
-  { name: 'restore-japanla', state: 'CA' },
-  { name: 'lynn-nguyen-and-brent-collier-riot-relief', state: 'OR' },
-  { name: 'help-buranko-cafe', state: 'OR' },
-  { name: 'help-poc-owned-business-recover-from-riot', state: 'OR' },
-  { name: 'la-mesa-business-disaster-recovery', state: 'CA' },
-  { name: 'zahalea-anderson', state: 'CA' },
-  { name: 'protesters-and-bond-funds', state: 'GA' },
-  { name: 'justicefordavidmcatee', state: 'KY' },
-  { name: 'help-minneapolis-small-businesses', state: 'MN' },
-  { name: '20ux59f8yo', state: 'TX' },
-  { name: 'neighbors4stephanie', state: 'MN' },
-  { name: 'inails-amp-spa-long-beach', state: 'CA' },
-  { name: 'philadelphia-black-owned-business-relief', state: 'PA' },
-  { name: 'help-sb-small-businesses-rebuild-amp-recover', state: 'CA' },
-  { name: 'rebuild-san-bernardino', state: 'CA' },
-  { name: 'alanbertos-vandalized-help-to-cover-repair-cost', state: 'CA' },
-  { name: 'for-james-scurlocks-family', state: 'NE' },
-  { name: 'fundraiser-for-small-business-destroyed', state: 'NY' },
-  { name: 'express-food-market-relief', state: 'IL' },
-  { name: 'bay-area-black-owned-business-relief-fund', state: 'CA' },
-  { name: 'help-black-owned-businesses-rebuild', state: 'CA' },
-];
+console.log(process.env.FAUNADB_KEY);
+const client = new faunadb.Client({ secret: process.env.FAUNADB_KEY });
+
+async function getData() {
+  let values = await client.query<{ data: [string, string][] }>(
+    q.Paginate(q.Match(q.Index('approved'), true))
+  );
+
+  return values.data.map(([name, state]) => {
+    return { name, state };
+  });
+}
 
 function generateIndex(
   data,
@@ -74,20 +64,43 @@ function getCampaignNet(name: string) {
 }
 
 async function run() {
+  let data = await getData();
+
   const limit = promiseLimit(parallel);
   let campaignData: Campaign[] = await Promise.all(
-    campaigns.map(({ name, state }) => {
+    data.map(({ name, state }) => {
       return limit(async () => {
         console.log(`Reading campaign ${name}`);
-        let json = await getCampaign(name);
-        return handleData(json, name, state);
+        try {
+          let json = await getCampaign(name);
+          return handleData(json, name, state);
+        } catch (e) {
+          console.error(`Failed reading campaign ${name}`, e.stack);
+        }
       }) as Promise<Campaign>;
     })
   );
 
   campaignData = campaignData
-    .map((c, i) => ({ ...c, index: i }))
-    .filter((c) => !c.deactivated && c.launched && c.donations_enabled);
+    .filter((c) => {
+      if (!c) {
+        return false;
+      }
+
+      if (c.deactivated) {
+        console.error(`Rejected: ${c.id} is deactivated`);
+        return false;
+      } else if (!c.launched) {
+        console.error(`Rejected: ${c.id} is not launched`);
+        return false;
+      } else if (!c.donations_enabled) {
+        console.error(`Rejected: ${c.id} is not accepting donations`);
+        return false;
+      }
+
+      return true;
+    })
+    .map((c, i) => ({ ...c, index: i }));
 
   let indices = {
     byHearts: generateIndex(campaignData, 'hearts'),
@@ -117,8 +130,9 @@ async function run() {
     },
   };
 
-  fs.writeFileSync('../data/regions.json', JSON.stringify(regions));
-  fs.writeFileSync('../data/campaigns.json', JSON.stringify(output));
+  let root = pkgDir.sync();
+  fs.writeFileSync(`${root}/data/regions.json`, JSON.stringify(regions));
+  fs.writeFileSync(`${root}/data/campaigns.json`, JSON.stringify(output));
   console.log('Wrote output to ../data');
 }
 
