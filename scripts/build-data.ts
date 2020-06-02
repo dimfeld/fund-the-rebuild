@@ -80,7 +80,7 @@ async function run() {
       return limit(async () => {
         console.log(`Reading campaign ${name}`);
         let json = await getCampaign(name);
-        return handleData(json, state);
+        return handleData(json, name, state);
       }) as Promise<Campaign>;
     })
   );

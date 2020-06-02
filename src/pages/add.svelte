@@ -119,7 +119,7 @@
           Add the URL of the campaign above and it will show up here.
         </span>
       {:else if state === STATE_LOADING}
-        Loading spinner!
+        Loading...
       {:else if state === STATE_ERROR}
         <span class="text-sm font-medium text-gray-700">
           Couldn't load this campaign. Please check the URL you used.
