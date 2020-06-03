@@ -4,7 +4,7 @@ import { JSDOM } from 'jsdom';
 
 import { getCampaign } from '../src/sources/gofundme';
 
-export default async function (req: NowRequest, res: NowResponse) {
+async function tryGet(req: NowRequest, res: NowResponse, tryAgain = true) {
   try {
     let { campaign } = req.query;
     if (!campaign) {
@@ -24,8 +24,17 @@ export default async function (req: NowRequest, res: NowResponse) {
       });
     }
 
-    return res.status(500).json({
-      error: e.stack,
-    });
+    if (tryAgain) {
+      return tryGet(req, res, false);
+    } else {
+      return res.status(500).json({
+        error: e.stack,
+        response: e.response,
+      });
+    }
   }
+}
+
+export default async function (req: NowRequest, res: NowResponse) {
+  return tryGet(req, res, true);
 }
