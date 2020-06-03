@@ -10,6 +10,18 @@
   function formatDollars(n) {
     return Intl.NumberFormat({ style: 'currency' }).format(n);
   }
+
+  function donate() {
+    window.plausible('donate');
+  }
+
+  function share() {
+    window.plausible('share');
+  }
+
+  function gotoCampaign() {
+    window.plausible('gotoCampaign');
+  }
 </script>
 
 <div class="bg-white overflow-hidden sm:shadow sm:rounded-lg">
@@ -19,6 +31,7 @@
         class="hover:underline"
         target="_blank"
         rel="noopener"
+        on:click={gotoCampaign}
         href="https://gofundme.com/f/{campaign.id}">
         {campaign.name}
       </a>
@@ -44,6 +57,7 @@
             <a
               target="_blank"
               rel="noopener"
+              on:click={share}
               href="https://www.gofundme.com/f/{campaign.id}/share">
               <span class="inline-flex rounded-md shadow-sm">
                 <button
@@ -61,6 +75,7 @@
             <a
               target="_blank"
               rel="noopener"
+              on:click={donate}
               href="https://www.gofundme.com/f/{campaign.id}/donate">
               <span class="inline-flex rounded-md shadow-sm">
                 <button
