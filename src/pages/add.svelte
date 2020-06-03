@@ -55,6 +55,8 @@
       campaignState = m[1];
     }
 
+    window.plausible('submitCampaign');
+
     state = STATE_SUBMITTING;
     try {
       await ky
