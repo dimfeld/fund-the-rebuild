@@ -10,7 +10,7 @@
     "routify": "routify --single-build",
     "dev": "yarn run clean && NODE_ENV=development run-p start:dev routify-dev",
     "clean": "rimraf public",
-    "build": "NODE_ENV=production run-s clean routify rollup",
+    "build": "NODE_ENV=production run-s build-data clean routify rollup",
     "start": "sirv public --single -H 0.0.0.0",
     "start:dev": "NODE_ENV=development sirv public --port $PORT --single --dev -H 0.0.0.0",
     "build-data": "scripts/build-data.ts",
