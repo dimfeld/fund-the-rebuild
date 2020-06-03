@@ -36,49 +36,19 @@ function getCampaignNet(name: string) {
 }
 
 async function run() {
-  let data = await getData();
-  for (let { ref, name } of data) {
+  let values: { ref: string; name: string }[] = [];
+  await client
+    .paginate(q.Match(q.Index('approved'), false))
+    .each((rows: [string, string][]) => {
+      for (let [ref, name] of rows) {
+        values.push({ ref, name });
+      }
+    });
+
+  for (let { ref, name } of values) {
     await client.query(q.Update(ref, { data: { approved: true } }));
     console.log(`Approved ${name}`);
   }
-
-  return;
-
-  // const limit = promiseLimit(parallel);
-  // let campaignData: Campaign[] = await Promise.all(
-  //   data.map((name) => {
-  //     return limit(async () => {
-  //       console.log(`Reading campaign ${name}`);
-  //       try {
-  //         let json = await getCampaign(name);
-  //         return handleData(json, name, state);
-  //       } catch (e) {
-  //         console.error(`Failed reading campaign ${name}`, e.stack);
-  //       }
-  //     }) as Promise<Campaign>;
-  //   })
-  // );
-
-  // campaignData = campaignData
-  //   .filter((c) => {
-  //     if (!c) {
-  //       return false;
-  //     }
-
-  //     if (c.deactivated) {
-  //       console.error(`Rejected: ${c.id} is deactivated`);
-  //       return false;
-  //     } else if (!c.launched) {
-  //       console.error(`Rejected: ${c.id} is not launched`);
-  //       return false;
-  //     } else if (!c.donations_enabled) {
-  //       console.error(`Rejected: ${c.id} is not accepting donations`);
-  //       return false;
-  //     }
-
-  //     return true;
-  //   })
-  //   .map((c, i) => ({ ...c, index: i }));
 }
 
 run().catch(console.error);

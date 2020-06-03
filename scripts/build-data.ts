@@ -19,14 +19,20 @@ interface CampaignDef {
 
 const client = new faunadb.Client({ secret: process.env.FAUNADB_KEY });
 
-async function getData() {
-  let values = await client.query<{
-    data: [faunadb.ExprVal, string, string][];
-  }>(q.Paginate(q.Match(q.Index('approved'), true)));
+type ApprovedIndexValue = [faunadb.ExprVal, string, string];
 
-  return values.data.map(([ref, name, state]) => {
-    return { ref, name, state };
-  });
+async function getData() {
+  let values: { ref: faunadb.ExprVal; name: string; state: string }[] = [];
+
+  await client
+    .paginate(q.Match(q.Index('approved'), true))
+    .each((rows: ApprovedIndexValue[]) => {
+      for (let [ref, name, state] of rows) {
+        values.push({ ref, name, state });
+      }
+    });
+
+  return values;
 }
 
 function generateIndex(
