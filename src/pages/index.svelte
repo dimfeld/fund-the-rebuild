@@ -2,6 +2,7 @@
   import Campaign from './_Campaign.svelte';
   import data from '../../data/campaigns.json';
   import regions from '../../data/regions.json';
+  import states from '../../data/states.json';
 
   let currentRegion = 'all';
   let currentSort = 'byRaised';
@@ -11,21 +12,22 @@
 
   $: regionOptions = regions.map((region) => {
     let numCampaigns = data.regions[region][currentSort].length;
+    let regionName = states[region] || region;
     return {
       region,
-      label: `${region} (${numCampaigns})`,
+      label: `${regionName} (${numCampaigns})`,
     };
   });
 </script>
 
 <div class="flex flex-col">
   <div
-    class="flex flex-row text-sm text-gray-700 font-medium justify-between px-2
-    sm:px-0 sm:justify-start sm:space-x-4">
+    class="flex flex-col space-y-2 px-2 sm:px-0 sm:space-y-0 sm:flex-row text-sm
+    text-gray-700 font-medium sm:space-x-4">
     <div class="flex flex-col">
       <span>Region</span>
       <select
-        class="text-sm text-gray-700 font-medium mt-1 form-select"
+        class="text-base sm:text-sm text-gray-700 font-medium mt-1 form-select"
         bind:value={currentRegion}>
         <option value="all">
           All ({data.regions.all[currentSort].length})
@@ -39,7 +41,7 @@
     <div class="flex flex-col">
       <span class="text-sm text-gray-700 font-medium">Show First</span>
       <select
-        class="text-sm text-gray-700 font-medium mt-1 form-select"
+        class="text-base sm:text-sm text-gray-700 font-medium mt-1 form-select"
         bind:value={currentSort}>
         <option value="byRaised">Money Raised</option>
         <option value="byDonations">Number of Donations</option>
