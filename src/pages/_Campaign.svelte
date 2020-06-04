@@ -1,5 +1,6 @@
 <script>
   import { formatDistanceToNow } from 'date-fns';
+  import states from '../../data/states.json';
 
   export let campaign;
 
@@ -21,6 +22,10 @@
 
   function gotoCampaign() {
     window.plausible('gotoCampaign');
+  }
+
+  function regionString(region) {
+    return states[region] || region;
   }
 </script>
 
@@ -102,7 +107,13 @@
         <div
           class="text-gray-700 font-medium text-sm mt-4 flex flex-row
           justify-between">
-          <div>Launched {launched} in {campaign.region}</div>
+          <div>
+            Launched {launched} in
+            <span class="inline sm:hidden">{campaign.region}</span>
+            <span class="hidden sm:inline">
+              {regionString(campaign.region)}
+            </span>
+          </div>
 
           <div class="flex flex-row space-x-4">
             <div class="flex flex-row space-x-2">
