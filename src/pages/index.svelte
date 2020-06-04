@@ -27,7 +27,7 @@
     </div>
 
     <div class="flex flex-col">
-      <span class="text-sm text-gray-700 font-medium">Show</span>
+      <span class="text-sm text-gray-700 font-medium">Show First</span>
       <select
         class="text-sm text-gray-700 font-medium mt-1 form-select"
         bind:value={currentSort}>
