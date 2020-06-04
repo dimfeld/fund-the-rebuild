@@ -8,6 +8,14 @@
   $: showCampaigns = data.regions[currentRegion][currentSort].map(
     (index) => data.campaigns[index]
   );
+
+  $: regionOptions = regions.map((region) => {
+    let numCampaigns = data.regions[region][currentSort].length;
+    return {
+      region,
+      label: `${region} (${numCampaigns})`,
+    };
+  });
 </script>
 
 <div class="flex flex-col">
@@ -19,9 +27,11 @@
       <select
         class="text-sm text-gray-700 font-medium mt-1 form-select"
         bind:value={currentRegion}>
-        <option value="all">All</option>
-        {#each regions as region}
-          <option value={region}>{region}</option>
+        <option value="all">
+          All ({data.regions.all[currentSort].length})
+        </option>
+        {#each regionOptions as { region, label }}
+          <option value={region}>{label}</option>
         {/each}
       </select>
     </div>
