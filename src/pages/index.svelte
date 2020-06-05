@@ -20,27 +20,29 @@
   });
 </script>
 
-<div class="flex flex-col">
+<div class="flex flex-col max-w-full">
   <div class="flex sm:hidden justify-end items-end space-x-2 px-2">
-    <div
-      class="fb-share-button"
-      data-href="https://fundtherebuild.com"
-      data-layout="button_count"
-      data-size="small">
+
+    <div style="width:61px" class="overflow-hidden">
       <a
-        target="_blank"
-        href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ffundtherebuild.com%2F&amp;src=sdkpreparse"
-        class="fb-xfbml-parse-ignore">
-        Share
+        href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+        class="twitter-share-button"
+        data-url="https://fund-the-rebuild.now.sh"
+        data-show-count="false">
+        Tweet
       </a>
     </div>
-    <a
-      href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-      class="twitter-share-button"
-      data-url="https://fund-the-rebuild.now.sh"
-      data-show-count="false">
-      Tweet
-    </a>
+    <div>
+      <iframe
+        src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ffundtherebuild.com&layout=button_count&size=small&width=96&height=20&appId"
+        width="96"
+        height="20"
+        style="border:none;overflow:hidden"
+        scrolling="no"
+        frameborder="0"
+        allowTransparency="true"
+        allow="encrypted-media" />
+    </div>
 
   </div>
   <div
@@ -76,19 +78,7 @@
     </div>
 
     <div class="hidden sm:ml-auto sm:flex space-x-2">
-      <div
-        class="fb-share-button"
-        data-href="https://fundtherebuild.com"
-        data-layout="button_count"
-        data-size="large">
-        <a
-          target="_blank"
-          href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ffundtherebuild.com%2F&amp;src=sdkpreparse"
-          class="fb-xfbml-parse-ignore">
-          Share
-        </a>
-      </div>
-      <div>
+      <div style="width:76px" class="overflow-hidden">
         <a
           href="https://twitter.com/share?ref_src=twsrc%5Etfw"
           class="twitter-share-button"
@@ -98,6 +88,16 @@
           Tweet
         </a>
       </div>
+      <iframe
+        src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ffundtherebuild.com&layout=button_count&size=large&width=102&height=28&appId"
+        width="102"
+        height="28"
+        style="border:none;overflow:hidden"
+        scrolling="no"
+        frameborder="0"
+        allowTransparency="true"
+        allow="encrypted-media" />
+
     </div>
 
   </div>
