@@ -3,6 +3,7 @@
   import data from '../../data/campaigns.json';
   import regions from '../../data/regions.json';
   import states from '../../data/states.json';
+  import { twitter } from '../services';
 
   let currentRegion = 'all';
   let currentSort = 'byRaised';
@@ -18,20 +19,33 @@
       label: `${regionName} (${numCampaigns})`,
     };
   });
+
+  let twitterShareSmall;
+  $: if ($twitter && twitterShareSmall) {
+    $twitter.widgets.createShareButton(
+      'https://fund-the-rebuild.now.sh',
+      twitterShareSmall,
+      { size: 'small' }
+    );
+  }
+
+  let twitterShareLarge;
+  $: if ($twitter && twitterShareLarge) {
+    $twitter.widgets.createShareButton(
+      'https://fund-the-rebuild.now.sh',
+      twitterShareLarge,
+      { size: 'large' }
+    );
+  }
 </script>
 
 <div class="flex flex-col max-w-full">
   <div class="flex sm:hidden justify-end items-end space-x-2 px-2">
 
-    <div style="width:61px" class="overflow-hidden">
-      <a
-        href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-        class="twitter-share-button"
-        data-url="https://fund-the-rebuild.now.sh"
-        data-show-count="false">
-        Tweet
-      </a>
-    </div>
+    <div
+      style="width:61px"
+      class="overflow-hidden"
+      bind:this={twitterShareSmall} />
     <div>
       <iframe
         src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ffundtherebuild.com&layout=button_count&size=small&width=96&height=20&appId"
@@ -78,18 +92,13 @@
     </div>
 
     <div class="hidden sm:ml-auto sm:flex space-x-2">
-      <div style="width:76px" class="overflow-hidden">
-        <a
-          href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-          class="twitter-share-button"
-          data-size="large"
-          data-url="https://fund-the-rebuild.now.sh"
-          data-show-count="true">
-          Tweet
-        </a>
-      </div>
+      <div
+        style="width:76px"
+        class="overflow-hidden"
+        bind:this={twitterShareLarge} />
       <iframe
         src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Ffundtherebuild.com&layout=button_count&size=large&width=102&height=28&appId"
+        title="Share on Facebook"
         width="102"
         height="28"
         style="border:none;overflow:hidden"
