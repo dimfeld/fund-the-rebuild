@@ -116,35 +116,39 @@
           </div>
 
           <div class="flex flex-row space-x-4">
-            <div class="flex flex-row space-x-2">
-              <svg
-                class="w-6 h-6 text-red-800"
-                fill="currentColor"
-                viewBox="0 0 20 20">
-                <path
-                  fill-rule="evenodd"
-                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0
-                  115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-                  clip-rule="evenodd" />
-              </svg>
-
-              <span class="text-gray-700 font-medium">{campaign.hearts}</span>
-            </div>
-
-            <div class="flex flex-row w-full">
+            {#if typeof campaign.hearts === 'number'}
               <div class="flex flex-row space-x-2">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                <svg
+                  class="w-6 h-6 text-red-800"
+                  fill="currentColor"
+                  viewBox="0 0 20 20">
                   <path
-                    d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94
-                    2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0
-                    000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                    fill-rule="evenodd"
+                    d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0
+                    115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                    clip-rule="evenodd" />
                 </svg>
-                <span class="text-gray-700 font-medium">
-                  {campaign.shared_count}
-                </span>
-              </div>
 
-            </div>
+                <span class="text-gray-700 font-medium">{campaign.hearts}</span>
+              </div>
+            {/if}
+
+            {#if typeof campaign.shared_count === 'number'}
+              <div class="flex flex-row w-full">
+                <div class="flex flex-row space-x-2">
+                  <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100
+                      4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027
+                      0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                  </svg>
+                  <span class="text-gray-700 font-medium">
+                    {campaign.shared_count}
+                  </span>
+                </div>
+
+              </div>
+            {/if}
           </div>
 
         </div>
