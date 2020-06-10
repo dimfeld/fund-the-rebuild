@@ -55,7 +55,6 @@
     "@typescript-eslint/parser": "^2.26.0",
     "autoprefixer": "^9.6.1",
     "babel-eslint": "^10.0.3",
-    "babel-loader": "^8.0.6",
     "cssnano": "^4.1.10",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
@@ -74,11 +73,9 @@
     "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^5.1.2",
-    "svelte": "^3.20.1",
-    "svelte-loader": "^2.13.6",
+    "svelte": "^3.23.2",
     "svelte-preprocess": "^3.1.1",
     "tailwindcss": "^1.4.0",
-    "ts-loader": "^7.0.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.9"
   }
