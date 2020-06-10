@@ -85,7 +85,7 @@
         <option value="byDonations">Number of Donations</option>
         <option value="byRemaining">Remaining Needed</option>
         <option value="byPercent">Percent to Goal</option>
-        <option value="bySharedCount">Times Shared</option>
+        <!-- <option value="bySharedCount">Times Shared</option> -->
         <!-- <option value="byHearts">Followers</option> -->
 
       </select>
